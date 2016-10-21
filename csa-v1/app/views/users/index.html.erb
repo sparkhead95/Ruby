@@ -23,11 +23,11 @@
       </thead>
       <tbody>
       <% @users.each do |user| %>
-          <tr>
-            <td><%= user.surname %></td>
-            <td><%= user.firstname %></td>
-            <td><%= user.email %></td>
-            <td><%= user.grad_year %></td>
+          <tr class="data">
+            <td class="surname"><%= user.surname %></td>
+            <td class="firstname"><%= user.firstname %></td>
+            <td class="email"><%= user.email %></td>
+            <td class="grad_year"><%= user.grad_year %></td>
             <td><%= link_to(image_tag('eye.jpg', alt: 'Show',
                                       title: 'Show details', border: '0'),
                             user_path(user, page: @users.current_page))
