@@ -1,7 +1,15 @@
 <h1>User accounts</h1>
 
 <% if @users.length > 0 %>
-    <table>
+    <%= form_tag(search_users_path,
+                 method: :get,
+                 id: "search") do %>
+      <fieldset>
+        <%= text_field_tag(:query) %>
+        <%= submit_tag("Search") %>
+      </fieldset>
+    <% end %>
+     <table>
       <thead>
       <tr>
         <th>Surname</th>

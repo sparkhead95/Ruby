@@ -95,4 +95,8 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:surname, :firstname, :phone, :grad_year, :jobs, :email)
   end
+  def search
+   @users = User.paginate(page:params[:page], per_page: params[:per_page]).order('surname,firstname')
+  render 'index'
+end
 end
