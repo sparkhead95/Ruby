@@ -1,5 +1,5 @@
-class ApplicationController < ActionController::Base
-  helper_method :is_admin?, :logged_in?, :current_user
+class Api::ApplicationController < ApplicationController
+  helper_method  :logged_in?, :current_user
     
   # The current trend is to use HTTPS for all web app
   # communication. Note that we have switch on SSL and
@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
     
   before_action :set_locale
   before_action :login_required
@@ -41,17 +41,15 @@ class ApplicationController < ActionController::Base
   #   requesting the credentials
   def access_denied
     respond_to do |format|
-      format.html do
-        session[:original_uri] = request.fullpath
-        flash[:notice] = 'Please log in'
-        redirect_to new_session_url
-      end
       #(Some browsers, notably IE6, send Accept: */* and
       # trigger
       # the 'format.any' block incorrectly.
       # See http://bit.ly/ie6_borken or
       # http://bit.ly/ie6_borken2
       # for a workaround.)
+      format.any(:json, :xml) do
+        request_http_basic_authentication 'Web Password'
+      end
     end
   end
     
@@ -89,20 +87,9 @@ class ApplicationController < ActionController::Base
   end
     
   # Some very lightweight authorisation checking
-  def is_admin?
-    current_user ? current_user.login == 'admin' : false
-  end
-    
-  def admin_required
-    is_admin? || admin_denied
-  end
     
   def admin_denied
     respond_to do |format|
-      format.html do
-        flash[:error] = 'You must be admin to do that'
-        redirect_to root_url
-      end
     end
   end
     

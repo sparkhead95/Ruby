@@ -10,7 +10,16 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   
   get 'home', to: 'home#index', as: :home
-  
+ 
+  # Will support the following styles of URL:
+  # /api/users.json
+  # /api/users/1.json
+  # /api/users
+  namespace :api, defaults: {format: :json} do
+    resources :users, except: [:new, :edit]
+  end
+ 
   root 'home#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 end
