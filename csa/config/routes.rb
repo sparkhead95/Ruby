@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     get 'search', on: :collection
   end
   
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+ 
   resources :broadcasts, except: [:edit, :update]
   
   # A singleton resource and so no paths requiring ids are generated
