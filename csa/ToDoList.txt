@@ -1,0 +1,15 @@
+To-Do List
+==========
+
+- Develop a RESTful command line web client
+	-
+	-
+	-
+	-
+	-
+
+
+- Separate human and programmable web
+- Authentication.. so just like encryption and salt
+- Action cable (a gem) to get the broadcast feed - web sockets
+- Cucumber tests
