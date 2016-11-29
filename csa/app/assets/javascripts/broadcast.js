@@ -8,6 +8,14 @@ var END_COLOUR = 'F61F02';
 
 var twitterCharEffect = true;
 
+//= require cable
+//= require_self
+//= require_tree .
+
+this.App = {};
+
+App.cable = ActionCable.createConsumer();  
+
 //$(window).load(function () {
 $(document).on('ready page:change', function () {
 
