@@ -64,7 +64,9 @@ class BroadcastsController < ApplicationController
         end
         if no_errors
           format.html { redirect_to(broadcasts_url(page: @current_page)) }
-          format.json { render json: @broadcast, status: :created, location: @broadcast }
+          #format.json { render json: @broadcast, status: :created, location: @broadcast }
+	  #ActionCable.server.broadcast 'broadcast_channel', message: format.json { render json: @broadcast, status: :created, location: @broadcast }
+	  ActionCable.server.broadcast 'broadcast_channel', message: '<p>' +  @broadcast.to_s + '</p>'
         else
           format.html { render action: 'new' }
           format.json {
